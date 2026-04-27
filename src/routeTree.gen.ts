@@ -16,8 +16,6 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CategoriesIndexRouteImport } from './routes/categories.index'
 import { Route as ArticlesIndexRouteImport } from './routes/articles.index'
-import { Route as SitemapXmlRouteImport } from './routes/sitemap.xml'
-import { Route as RssXmlRouteImport } from './routes/rss.xml'
 import { Route as CategoriesNameRouteImport } from './routes/categories.$name'
 import { Route as ArticlesSlugRouteImport } from './routes/articles.$slug'
 
@@ -56,16 +54,6 @@ const ArticlesIndexRoute = ArticlesIndexRouteImport.update({
   path: '/articles/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SitemapXmlRoute = SitemapXmlRouteImport.update({
-  id: '/sitemap/xml',
-  path: '/sitemap/xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RssXmlRoute = RssXmlRouteImport.update({
-  id: '/rss/xml',
-  path: '/rss/xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CategoriesNameRoute = CategoriesNameRouteImport.update({
   id: '/categories/$name',
   path: '/categories/$name',
@@ -85,8 +73,6 @@ export interface FileRoutesByFullPath {
   '/search': typeof SearchRoute
   '/articles/$slug': typeof ArticlesSlugRoute
   '/categories/$name': typeof CategoriesNameRoute
-  '/rss/xml': typeof RssXmlRoute
-  '/sitemap/xml': typeof SitemapXmlRoute
   '/articles/': typeof ArticlesIndexRoute
   '/categories/': typeof CategoriesIndexRoute
 }
@@ -98,8 +84,6 @@ export interface FileRoutesByTo {
   '/search': typeof SearchRoute
   '/articles/$slug': typeof ArticlesSlugRoute
   '/categories/$name': typeof CategoriesNameRoute
-  '/rss/xml': typeof RssXmlRoute
-  '/sitemap/xml': typeof SitemapXmlRoute
   '/articles': typeof ArticlesIndexRoute
   '/categories': typeof CategoriesIndexRoute
 }
@@ -112,8 +96,6 @@ export interface FileRoutesById {
   '/search': typeof SearchRoute
   '/articles/$slug': typeof ArticlesSlugRoute
   '/categories/$name': typeof CategoriesNameRoute
-  '/rss/xml': typeof RssXmlRoute
-  '/sitemap/xml': typeof SitemapXmlRoute
   '/articles/': typeof ArticlesIndexRoute
   '/categories/': typeof CategoriesIndexRoute
 }
@@ -127,8 +109,6 @@ export interface FileRouteTypes {
     | '/search'
     | '/articles/$slug'
     | '/categories/$name'
-    | '/rss/xml'
-    | '/sitemap/xml'
     | '/articles/'
     | '/categories/'
   fileRoutesByTo: FileRoutesByTo
@@ -140,8 +120,6 @@ export interface FileRouteTypes {
     | '/search'
     | '/articles/$slug'
     | '/categories/$name'
-    | '/rss/xml'
-    | '/sitemap/xml'
     | '/articles'
     | '/categories'
   id:
@@ -153,8 +131,6 @@ export interface FileRouteTypes {
     | '/search'
     | '/articles/$slug'
     | '/categories/$name'
-    | '/rss/xml'
-    | '/sitemap/xml'
     | '/articles/'
     | '/categories/'
   fileRoutesById: FileRoutesById
@@ -167,8 +143,6 @@ export interface RootRouteChildren {
   SearchRoute: typeof SearchRoute
   ArticlesSlugRoute: typeof ArticlesSlugRoute
   CategoriesNameRoute: typeof CategoriesNameRoute
-  RssXmlRoute: typeof RssXmlRoute
-  SitemapXmlRoute: typeof SitemapXmlRoute
   ArticlesIndexRoute: typeof ArticlesIndexRoute
   CategoriesIndexRoute: typeof CategoriesIndexRoute
 }
@@ -224,20 +198,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArticlesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/sitemap/xml': {
-      id: '/sitemap/xml'
-      path: '/sitemap/xml'
-      fullPath: '/sitemap/xml'
-      preLoaderRoute: typeof SitemapXmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/rss/xml': {
-      id: '/rss/xml'
-      path: '/rss/xml'
-      fullPath: '/rss/xml'
-      preLoaderRoute: typeof RssXmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/categories/$name': {
       id: '/categories/$name'
       path: '/categories/$name'
@@ -263,8 +223,6 @@ const rootRouteChildren: RootRouteChildren = {
   SearchRoute: SearchRoute,
   ArticlesSlugRoute: ArticlesSlugRoute,
   CategoriesNameRoute: CategoriesNameRoute,
-  RssXmlRoute: RssXmlRoute,
-  SitemapXmlRoute: SitemapXmlRoute,
   ArticlesIndexRoute: ArticlesIndexRoute,
   CategoriesIndexRoute: CategoriesIndexRoute,
 }
