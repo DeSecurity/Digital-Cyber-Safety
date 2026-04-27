@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Calendar, Clock, User, ChevronLeft, ChevronRight, Tag } from "lucide-react";
-import { getArticle, getRelated, articles } from "@/content/articles";
+import { getArticle, getRelated, articles, type Article } from "@/content/articles";
 import { defaultPlacement, getPromos } from "@/content/promos";
 import { ArticleBody } from "@/components/ArticleBody";
 import { TableOfContents } from "@/components/TableOfContents";
@@ -50,7 +50,7 @@ export const Route = createFileRoute("/articles/$slug")({
 });
 
 function ArticlePage() {
-  const { article } = Route.useLoaderData();
+  const { article } = Route.useLoaderData() as { article: Article };
   const related = getRelated(article.slug, 3);
   const idx = articles.findIndex((a) => a.slug === article.slug);
   const prev = articles[idx + 1];
