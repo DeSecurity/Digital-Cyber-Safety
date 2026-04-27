@@ -1,0 +1,20 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - run: bun run build
+      # The Lovable platform also auto-deploys on push.
+      # If self-hosting on Cloudflare Pages, Vercel, or Netlify,
+      # connect this repo and they will pick up the build automatically.
