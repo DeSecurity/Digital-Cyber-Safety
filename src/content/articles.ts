@@ -2,7 +2,19 @@
 // Articles live as .md files in src/content/posts/*.md with frontmatter.
 // To publish: drop a new .md file, push to GitHub, site rebuilds automatically.
 
-import matter from "gray-matter";
+import yaml from "js-yaml";
+
+// Browser-safe frontmatter parser (gray-matter requires Node fs/Buffer).
+function matter(raw: string): { data: Record<string, any>; content: string } {
+  const m = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/.exec(raw);
+  if (!m) return { data: {}, content: raw };
+  try {
+    const data = (yaml.load(m[1]) as Record<string, any>) || {};
+    return { data, content: m[2] };
+  } catch {
+    return { data: {}, content: m[2] };
+  }
+}
 
 // Inline reading-time calc (avoids Node's stream/util in browser bundles).
 const WORDS_PER_MINUTE = 200;
