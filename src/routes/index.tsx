@@ -13,7 +13,7 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Calm, clear cybersecurity guidance for families and professionals. Stay safe online without the jargon." },
       { property: "og:title", content: "Digital Cyber Safety" },
       { property: "og:description", content: "Calm, clear cybersecurity guidance for families and professionals." },
-      { property: "og:image", content: "/og-home.jpg" },
+      { property: "og:image", content: `${import.meta.env.BASE_URL}og-home.jpg` },
     ],
   }),
   component: HomePage,

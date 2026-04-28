@@ -24,7 +24,7 @@ export function SiteFooter() {
             <li><Link to="/articles" className="hover:text-primary">All Articles</Link></li>
             <li><Link to="/categories" className="hover:text-primary">Categories</Link></li>
             <li><Link to="/search" className="hover:text-primary">Search</Link></li>
-            <li><a href="/rss.xml" className="hover:text-primary">RSS Feed</a></li>
+            <li><a href={`${import.meta.env.BASE_URL}rss.xml`} className="hover:text-primary">RSS Feed</a></li>
           </ul>
         </div>
         <div>

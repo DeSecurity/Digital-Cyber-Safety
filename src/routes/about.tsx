@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Shield, Eye, Heart } from "lucide-react";
 
 export const Route = createFileRoute("/about")({
@@ -43,7 +43,7 @@ function AboutPage() {
         <h2>Who we write for</h2>
         <p>Non-technical users. Families. Small business owners. Professionals outside IT. If you've ever felt overwhelmed by a security article, this site is for you.</p>
         <h2>How we make money</h2>
-        <p>We participate in affiliate programs (including Amazon Associates) and earn small commissions when readers buy through our links. We also sell apparel through our sister brand, Advanced Persistent Threads. Every recommendation is something we'd give to a friend — paid or not. See the <a href="/disclosure">affiliate disclosure</a> for details.</p>
+        <p>We participate in affiliate programs (including Amazon Associates) and earn small commissions when readers buy through our links. We also sell apparel through our sister brand, Advanced Persistent Threads. Every recommendation is something we'd give to a friend — paid or not. See the <Link to="/disclosure">affiliate disclosure</Link> for details.</p>
       </div>
     </div>
   );
