@@ -3,7 +3,13 @@
 // To publish: drop a new .md file, push to GitHub, site rebuilds automatically.
 
 import matter from "gray-matter";
-import readingTime from "reading-time";
+
+// Inline reading-time calc (avoids Node's stream/util in browser bundles).
+const WORDS_PER_MINUTE = 200;
+function estimateReadingMinutes(text: string): number {
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.ceil(words / WORDS_PER_MINUTE));
+}
 
 // Vite glob: all markdown posts loaded at build time as raw strings.
 const rawPosts = import.meta.glob("./posts/*.md", { eager: true, query: "?raw", import: "default" }) as Record<string, string>;
@@ -55,7 +61,7 @@ function resolveCover(name?: string): string | undefined {
 function parsePost(path: string, raw: string): Article {
   const { data, content } = matter(raw);
   const slug = path.split("/").pop()!.replace(/\.md$/, "");
-  const stats = readingTime(content);
+  const stats = { minutes: estimateReadingMinutes(content) };
   const excerpt =
     data.excerpt ||
     content
