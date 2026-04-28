@@ -1,13 +1,25 @@
-name: Deploy
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      # Repo is served from https://desecurity.github.io/Digital-Cyber-Safety/
+      BASE_PATH: /Digital-Cyber-Safety/
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
@@ -15,6 +27,33 @@ jobs:
           bun-version: latest
       - run: bun install --frozen-lockfile
       - run: bun run build
-      # The Lovable platform also auto-deploys on push.
-      # If self-hosting on Cloudflare Pages, Vercel, or Netlify,
-      # connect this repo and they will pick up the build automatically.
+
+      # Locate the static output directory produced by TanStack Start SPA build.
+      - name: Stage Pages output
+        run: |
+          set -e
+          if [ -d ".output/public" ]; then SRC=".output/public";
+          elif [ -d "dist/client" ]; then SRC="dist/client";
+          elif [ -d "dist" ]; then SRC="dist";
+          else echo "No build output found"; ls -la; exit 1; fi
+          echo "Using $SRC"
+          mkdir -p _site
+          cp -r "$SRC"/. _site/
+          # SPA fallback so deep links (e.g. /articles/foo) work on Pages
+          cp _site/index.html _site/404.html
+          # Disable Jekyll so files starting with _ are served
+          touch _site/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
